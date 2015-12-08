@@ -1,0 +1,8 @@
+name: CPPTool
+account: bccpp
+server: shinyapps.io
+bundleId: 325620
+url: https://bccpp.shinyapps.io/CPPTool
+when: 1449431011.81715
+asMultiple: FALSE
+asStatic: FALSE
