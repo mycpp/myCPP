@@ -9,6 +9,7 @@ library(shiny)
 library(ggplot2)
 library(plotly)
 library(leaflet)
+#some code here
 
 generationData = read.csv("data/statedata.csv", #"https://docs.google.com/spreadsheets/d/1ZbDI31sSKatBoEVKo70TV_A4VwCBHK4pIoCWXB7yfx0/pub?gid=192701245&single=true&output=csv", 
                           header = TRUE) #read csv file
