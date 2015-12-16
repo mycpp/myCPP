@@ -58,6 +58,6 @@ ORIS.Codes <- unique(plant2012data$ORIS.Code)
 #sapply(x[1:100], getLocations, simplify = "array")
 y1 <- t(sapply(ORIS.Codes, getLocations, simplify = "TRUE"))
 colnames(y1) <- c("Name", "Code", "Lat", "Lon", "State")
-
+write.csv(y1, "code/data/plantgeodata.csv")
 #v1 <- matrix(NA, nrow = 100, ncol = 5)
 #v2 <- vapply(ORIS.Codes[1:100], getLocations, FUN.VALUE = t(c(rep("x", 5))))
