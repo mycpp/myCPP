@@ -1,4 +1,4 @@
-# Welcome to Project Falcon - the Bredesen Center's Clean Power Plan Tool
+# Welcome to the Bredesen Center's Clean Power Plan Tool
 
 This is a running repository of active code development for the Clean Power Plan tool aided at helping to understand the implications for states towards the EPA's Clean Power Plan.
 
