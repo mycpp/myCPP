@@ -5,11 +5,13 @@
 # http://shiny.rstudio.com
 #
 
+## Libraries ----
 library(shiny)
 library(plotly)
 library(leaflet)
 library(maps)
 
+## Generation Data ----
 generationData = read.csv("data/statedata.csv", #"https://docs.google.com/spreadsheets/d/1ZbDI31sSKatBoEVKo70TV_A4VwCBHK4pIoCWXB7yfx0/pub?gid=192701245&single=true&output=csv", 
                           header = TRUE) #read csv file
 generationDataCleaned = generationData[!(is.null(generationData$Name) | generationData$Name==""), ]
@@ -18,11 +20,16 @@ generationDataCleaned = generationData[!(is.null(generationData$Name) | generati
 statenames = as.character(generationDataCleaned$Name) 
 row.names(generationDataCleaned) = statenames
 
-#set default
+## Plant Location Data
+
+geodata <- read.csv("data/plantgeodata.csv")
+
+# Set Default ----
 state = "Alabama"
 pctCoal = 0 
 pctNGCC = 0
 
+# Reactive ----
 shinyServer(function(input, output, session) {
   
   updateSelectizeInput(session,
@@ -36,35 +43,40 @@ shinyServer(function(input, output, session) {
     state = input$stateInput
     pctCoal = input$Coal / 100
     pctNGCC = input$NGCC / 100
-    
+## Handle Onload ----
     if(state == "") {
-      #handle onload
       state = "Alabama"
       pctCoal = 0 
       pctNGCC = 0
     }
+## Base Energy ----
     baseCoal_Energy = generationDataCleaned[state, "Coal.Steam.Electric.Generation..MWh."]
     baseNGCC_Energy = generationDataCleaned[state, "NGCC.Electric.Generation..MWh."]
     
     baseEnergy = sum(baseCoal_Energy,
                      baseNGCC_Energy
     )
-    
+## New Energy ----
     newEnergy = sum((1 + pctCoal) * baseCoal_Energy,
                     (1 + pctNGCC) * baseNGCC_Energy
     )
-    
+## Energy Frame ----
     Energy_Frame <- c(baseEnergy, newEnergy)
     
     print(Energy_Frame)
     
+## Leaflet Map ---------
     mapStates <- map('state', region = c(state))
+    
+    stateCode <- "AL"
+    
     your.map <- leaflet(data = mapStates) %>%
       addPolylines(data=mapStates, fill=FALSE, smoothFactor=FALSE, color="#000", weight = 3, opacity = 0.9) %>%
-      addMarkers(lat=35.9728, lng=-83.9422) #Knoxville, TN
+      #addMarkers(lat=35.9728, lng=-83.9422) #Knoxville, TN
+      addMarkers(data=geodata[((geodata$state.sheet==stateCode)&(geodata$State==stateCode)),], lng= ~Lon, lat = ~Lat)
+    # read https://rstudio.github.io/leaflet/ for syntax details
     output$Statemap <- renderLeaflet(your.map)
-    
-    ## Emissions (mass) calculated by Rate -----------
+## Emissions (mass) calculated by Rate -----------
     
     baseCoal_CO2_Rate = generationDataCleaned[state, "Coal.Steam.Emission.Rate..lb.MWh."]
     baseNGCC_CO2_Rate = generationDataCleaned[state, "NGCC.Emission.Rate..lb.MWh."]
@@ -79,7 +91,7 @@ shinyServer(function(input, output, session) {
     
     CO2_Rate_Frame <- c(baseCO2_Rate, newCO2_Rate) 
     
-    ## Emissions (mass) calculated by Mass -----------
+## Emissions (mass) calculated by Mass -----------
     
     baseCoal_CO2_Mass = generationDataCleaned[state, "Coal.Steam.Carbon.Dioxide.Emissions..tons."]
     baseNGCC_CO2_Mass = generationDataCleaned[state, "NGCC.Carbon.Dioxide.Emissions..tons."]
@@ -94,7 +106,7 @@ shinyServer(function(input, output, session) {
     
     CO2_Mass_Frame <- c(baseCO2_Mass, newCO2_Mass) 
     
-    ### result ----------    
+### result ----------    
     
     name_Frame <- c("Base", "New")
     
@@ -105,7 +117,7 @@ shinyServer(function(input, output, session) {
     
   })
   
-  # render -----  
+# render -----  
   
   output$dispNewEnergy <- renderUI({
     totalEnergy = result()[2,2]
