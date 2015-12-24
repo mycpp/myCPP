@@ -9,12 +9,13 @@ getUrl <- function(type, ORISCode)
   u <-   paste0(root[1], type,
                 root[2], apikey,
                 root[3], type, 
-                "_id=ELEC.PLANT.CONS_EG_BTU.",
-                ORISCode,"-ALL-ALL.A&out=json")
+ #               "_id=ELEC.PLANT.CONS_EG_BTU.",
+                  "_id=ELEC.PLANT.GEN.",
+                ORISCode,"-ALL-ALL.M&out=json")
   return(URLencode(u))
 }
 
-plant2012data <- read.csv("https://docs.google.com/spreadsheets/d/1ZbDI31sSKatBoEVKo70TV_A4VwCBHK4pIoCWXB7yfx0/pub?gid=1659543673&single=true&output=csv")
+# plant2012data <- read.csv("https://docs.google.com/spreadsheets/d/1ZbDI31sSKatBoEVKo70TV_A4VwCBHK4pIoCWXB7yfx0/pub?gid=1659543673&single=true&output=csv")
 
 pattern <- "\\:\\s\\D*\\s" # ": [name]"
 statePattern <- "\\-\\w*"
@@ -53,11 +54,17 @@ return (returnRow)
 
 ## ORIS Codes -----
 ORIS.Codes <- unique(plant2012data$ORIS.Code)
-#x[1:15]
-#t(sapply(x[1:15], getLocations))
 #sapply(x[1:100], getLocations, simplify = "array")
 y1 <- t(sapply(ORIS.Codes, getLocations, simplify = "TRUE"))
 colnames(y1) <- c("Name", "Code", "Lat", "Lon", "State")
 write.csv(y1, "code/data/plantgeodata.csv")
-#v1 <- matrix(NA, nrow = 100, ncol = 5)
-#v2 <- vapply(ORIS.Codes[1:100], getLocations, FUN.VALUE = t(c(rep("x", 5))))
+
+y2 <- t(sapply(blankmatches$ORIS.Code, getLocations, simplify = "TRUE"))
+colnames(y2) <- c("Name", "Code", "Lat", "Lon", "State")
+# return data with lat lon position
+y2 <- as.data.frame(y2)
+
+y2[ !(y2$State == "SD"), ]
+latlonfound <- y2[which(is.na(as.numeric(as.character(y2$State)))),]
+latlonnotfound <- y2[which(!is.na(as.numeric(as.character(y2$State)))),]
+write.csv(latlonfound, "code/data/plantgeodata-2.csv")
