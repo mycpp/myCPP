@@ -68,3 +68,8 @@ y2[ !(y2$State == "SD"), ]
 latlonfound <- y2[which(is.na(as.numeric(as.character(y2$State)))),]
 latlonnotfound <- y2[which(!is.na(as.numeric(as.character(y2$State)))),]
 write.csv(latlonfound, "code/data/plantgeodata-2.csv")
+
+## after adding the 13 plants found back to the original list, downloaded and cut to geodata.
+
+geodata <- plantslatlontypestate[1:10]
+write.csv(geodata, "code/data/plantgeodata.csv")
