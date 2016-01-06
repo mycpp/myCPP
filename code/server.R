@@ -16,8 +16,6 @@ generationData = read.csv("data/statedata.csv", #"https://docs.google.com/spread
                           header = TRUE) #read csv file
 generationDataCleaned = generationData[!(is.null(generationData$Name) | generationData$Name==""), ]
 
-#as.numeric(gsub(",","", generationDataCleaned$Coal.Steam.Electric.Generation..MWh.)) just got rid of , on data entry
-
 stateNameCSV = read.csv("data/StateNames.csv",
                         header = TRUE)
 statenames = as.character(stateNameCSV$State) 
@@ -67,30 +65,40 @@ shinyServer(function(input, output, session) {
     Energy_Frame <- c(baseEnergy, newEnergy)
     
     print(Energy_Frame)
+    ## Leaflet Maps --------- 
+    ### read https://rstudio.github.io/leaflet/ for syntax details
     
-    ## Leaflet Maps ---------
+    ## Handle Hawaii and Alaska abstraction ----
+    ### probably not really important, http://www.r-bloggers.com/mapping-capabilities-in-r/
+    if (state == "Hawaii") {
+    mapStates <- map('world', region = c("USA:Hawaii"))
+    } else if(state == "Alaska") {
+    mapStates <- map('world', region = c("USA:Alaska"))
+    } else                      {
+    ## 48 States and DC for a list: map('state', names = TRUE, plot = FALSE)
     mapStates <- map('state', region = c(state))
-    
+    }
     stateCode <- state
     pal <- colorFactor(palette(), geodata$FuelSimplified)
+    
     your.map1 <- leaflet(data = mapStates) %>%
       addProviderTiles("Stamen.TonerLite") %>%
       addPolylines(data=mapStates, fill=FALSE, smoothFactor=FALSE, color="#000", weight = 3, opacity = 0.9) %>%
+      
       addCircleMarkers(data=geodata[((geodata$State==state)),], lng= ~Lon, lat = ~Lat, color=~pal(FuelSimplified), stroke=FALSE, popup=~popup, fillOpacity=0.8, radius=~sqrt((Generation/6000)/3.14159))
-    # read https://rstudio.github.io/leaflet/ for syntax details
+    
     output$Statemap <- renderLeaflet(your.map1)
     
     your.map2 <- leaflet(data = mapStates) %>%
       addProviderTiles("Stamen.TonerLite") %>%
       addPolylines(data=mapStates, fill=FALSE, smoothFactor=FALSE, color="#000", weight = 3, opacity = 0.9) %>%
-      #addMarkers(lat=35.9728, lng=-83.9422) #Knoxville, TN
+      
       addCircleMarkers(data=geodata[((geodata$State==state)),], lng= ~Lon, lat = ~Lat, color=~pal(FuelSimplified), stroke=FALSE, popup=~popup, fillOpacity=0.8, radius=~sqrt((CarbonDioxide/6000)/3.14159))
-    # read https://rstudio.github.io/leaflet/ for syntax details
+    
     output$Carbonmap <- renderLeaflet(your.map2)
     
     
     ## Emissions (mass) calculated by Rate -----------
-    
     baseCoal_CO2_Rate = generationDataCleaned[state, "Coal.Steam.Emission.Rate..lb.MWh."]
     baseNGCC_CO2_Rate = generationDataCleaned[state, "NGCC.Emission.Rate..lb.MWh."]
     
@@ -119,8 +127,7 @@ shinyServer(function(input, output, session) {
     
     CO2_Mass_Frame <- c(baseCO2_Mass, newCO2_Mass) 
     
-    ### result ----------    
-    
+    ### result ----------
     name_Frame <- c("Base", "New")
     
     result <- data.frame(name_Frame, Energy_Frame, CO2_Rate_Frame, CO2_Mass_Frame)
@@ -130,8 +137,7 @@ shinyServer(function(input, output, session) {
     
   })
   
-  # render -----  
-  
+  # render -----
   output$dispNewEnergy <- renderUI({
     totalEnergy = result()[2,2]
     str1 <- paste("Your Annual Generation is")
@@ -144,7 +150,6 @@ shinyServer(function(input, output, session) {
     str2 <- paste(format(totalEnergy, big.mark=",", scientific = FALSE), " Mwh")
     HTML(paste(str1,str2, sep = '<br/>'))
   })
-  
   output$dispEff <- renderUI({
     efficiency = mean(1-result()[2,3]/result()[1,3],1-result()[2,4]/result()[1,4])
     effperc = format(efficiency * 100, digits = 1)
