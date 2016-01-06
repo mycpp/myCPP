@@ -15,18 +15,18 @@ library(maps)
 shinyUI(fluidPage(#theme = "bootstrap.css",
   
   # Application title
-  titlePanel("CPP Test Tool"),
+  titlePanel("Clean Power Plan Evaluation Tool"),
   
   # Sidebar with a slider input for number of bins
   fluidRow(
     column(4,
            sliderInput("Coal",
-                       "Coal Usage",
+                       "Coal Generation",
                        min = -20,
                        max = 20,
                        value = 0),
            sliderInput("NGCC",
-                       "NGCC Usage",
+                       "NGCC Generation",
                        min = -20,
                        max = 20,
                        value = 0),
@@ -47,28 +47,21 @@ shinyUI(fluidPage(#theme = "bootstrap.css",
            h3(htmlOutput("dispEff"))
     )
   ),
-  
   fluidRow(
     # Show a plot of the generated distribution
     column(4,
-           ""# actionButton("go", "Plot")
-    ),
-
-    column(8,
            tabsetPanel(type = "tabs", 
                        id = "tabset1",
                        tabPanel("Rate", value = "Rate", plotlyOutput("ratePlotly")),
-                       tabPanel("Mass", value = "Mass", plotlyOutput("massPlotly")),#, plotlyOutput("massPlot"))
-                       tabPanel("State Energy Map", value = "State Energy Map", leafletOutput("Statemap"))
-           )
-           #             h1(radioButtons("radio", 
-           #                             label = "Emissions",
-           #                             choices = list (
-           #                               "Rate" = 1,
-           #                               "Mass" = 2
-           #                             ),
-           #                             selected = 1)),
+                       tabPanel("Mass", value = "Mass", plotlyOutput("massPlotly"))
+           )),
+    column(8,tabsetPanel(type = "tabs", 
+                         id = "tabset2",
+                         tabPanel("Generation (MWh) Map", leafletOutput("Statemap")),
+                         tabPanel("Carbon Emissions (tons of CO2) Map", leafletOutput("Carbonmap"))
     )
-  )#,
+    ))
+)
+)
 
-))
+
