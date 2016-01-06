@@ -17,8 +17,11 @@ generationData = read.csv("data/statedata.csv", #"https://docs.google.com/spread
 generationDataCleaned = generationData[!(is.null(generationData$Name) | generationData$Name==""), ]
 
 #as.numeric(gsub(",","", generationDataCleaned$Coal.Steam.Electric.Generation..MWh.)) just got rid of , on data entry
-statenames = as.character(generationDataCleaned$Name) 
-row.names(generationDataCleaned) = statenames
+
+stateNameCSV = read.csv("data/StateNames.csv",
+                        header = TRUE)
+statenames = as.character(stateNameCSV$State) 
+row.names(generationDataCleaned) = as.character(generationDataCleaned$Name)
 
 ## Plant Location Data
 
