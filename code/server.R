@@ -27,6 +27,15 @@ row.names(generationDataCleaned) = as.character(generationDataCleaned$Name)
 ### Plant Location Data
 geodata <- read.csv("data/plantgeodata.csv")
 
+<<<<<<< HEAD
+=======
+# Set Default when page opens up to user----
+### needed here, called in shiny server????
+state = "Alabama"
+pctCoal = 0 
+pctNGCC = 0
+
+>>>>>>> origin/master
 # Reactive ----
 shinyServer(function(input, output, session) {
   
