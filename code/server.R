@@ -3,7 +3,7 @@
 # You can find out more about building applications with Shiny here:
 #
 # http://shiny.rstudio.com
-#
+# added comments 01/06/2016
 
 ## Libraries ----
 library(shiny)
@@ -12,23 +12,20 @@ library(leaflet)
 library(maps)
 
 ## Generation Data ----
+### denotes functions used to call data from csv files
 generationData = read.csv("data/statedata.csv", #"https://docs.google.com/spreadsheets/d/1ZbDI31sSKatBoEVKo70TV_A4VwCBHK4pIoCWXB7yfx0/pub?gid=192701245&single=true&output=csv", 
                           header = TRUE) #read csv file
 generationDataCleaned = generationData[!(is.null(generationData$Name) | generationData$Name==""), ]
 
 stateNameCSV = read.csv("data/StateNames.csv",
                         header = TRUE)
+
+### convert generation data to vectors with charcters for manipulation
 statenames = as.character(stateNameCSV$State) 
 row.names(generationDataCleaned) = as.character(generationDataCleaned$Name)
 
-## Plant Location Data
-
+### Plant Location Data
 geodata <- read.csv("data/plantgeodata.csv")
-
-# Set Default ----
-state = "Alabama"
-pctCoal = 0 
-pctNGCC = 0
 
 # Reactive ----
 shinyServer(function(input, output, session) {
@@ -40,17 +37,21 @@ shinyServer(function(input, output, session) {
                        server = TRUE)
   
   # reactive expression -------------  
+  ### denote the reactive inputs used in code (i.e. "input$somevariable here") 
   result <- reactive({
     state = input$stateInput
     pctCoal = input$Coal / 100
     pctNGCC = input$NGCC / 100
     ## Handle Onload ----
+    ### default display when nothing selected
     if(state == "") {
       state = "Alabama"
       pctCoal = 0 
       pctNGCC = 0
-    }
+    } 
     ## Base Energy ----
+    ### denotes variable used for calculations, varies with state
+    ### and calculates data for slider bars
     baseCoal_Energy = generationDataCleaned[state, "Coal.Steam.Electric.Generation..MWh."]
     baseNGCC_Energy = generationDataCleaned[state, "NGCC.Electric.Generation..MWh."]
     
@@ -62,21 +63,24 @@ shinyServer(function(input, output, session) {
                     (1 + pctNGCC) * baseNGCC_Energy
     )
     ## Energy Frame ----
+    ### concatenate "group" data into a one column vector "base" and "new" values
     Energy_Frame <- c(baseEnergy, newEnergy)
     
     print(Energy_Frame)
+    
     ## Leaflet Maps --------- 
     ### read https://rstudio.github.io/leaflet/ for syntax details
     
     ## Handle Hawaii and Alaska abstraction ----
     ### probably not really important, http://www.r-bloggers.com/mapping-capabilities-in-r/
+    ### in Maps these states were named differently, added code to handle correctly with our designations
     if (state == "Hawaii") {
-    mapStates <- map('world', region = c("USA:Hawaii"))
+      mapStates <- map('world', region = c("USA:Hawaii"))
     } else if(state == "Alaska") {
-    mapStates <- map('world', region = c("USA:Alaska"))
+      mapStates <- map('world', region = c("USA:Alaska"))
     } else                      {
-    ## 48 States and DC for a list: map('state', names = TRUE, plot = FALSE)
-    mapStates <- map('state', region = c(state))
+      ## 48 States and DC for a list: map('state', names = TRUE, plot = FALSE)
+      mapStates <- map('state', region = c(state))
     }
     stateCode <- state
     pal <- colorFactor(palette(), geodata$FuelSimplified)
@@ -99,6 +103,8 @@ shinyServer(function(input, output, session) {
     
     
     ## Emissions (mass) calculated by Rate -----------
+    ### denotes variable used for calculations, varies with state
+    ### and performs calculations 
     baseCoal_CO2_Rate = generationDataCleaned[state, "Coal.Steam.Emission.Rate..lb.MWh."]
     baseNGCC_CO2_Rate = generationDataCleaned[state, "NGCC.Emission.Rate..lb.MWh."]
     
@@ -109,11 +115,12 @@ shinyServer(function(input, output, session) {
     newCO2_Rate = sum(((1 + pctCoal) * baseCoal_CO2_Rate / 2000 * baseCoal_Energy) , #convert lbs to tons
                       ((1 + pctNGCC) * baseNGCC_CO2_Rate / 2000 * baseNGCC_Energy)   #convert lbs to tons
     )
-    
+    ### concatenate "group" data into a one column vector "base" and "new" values
     CO2_Rate_Frame <- c(baseCO2_Rate, newCO2_Rate) 
     
     ## Emissions (mass) calculated by Mass -----------
-    
+    ### denotes variable used for calculations, varies with state
+    ### and performs calculations     
     baseCoal_CO2_Mass = generationDataCleaned[state, "Coal.Steam.Carbon.Dioxide.Emissions..tons."]
     baseNGCC_CO2_Mass = generationDataCleaned[state, "NGCC.Carbon.Dioxide.Emissions..tons."]
     
@@ -124,33 +131,40 @@ shinyServer(function(input, output, session) {
     newCO2_Mass = sum((1 + pctCoal) * baseCoal_CO2_Mass,
                       (1 + pctNGCC) * baseNGCC_CO2_Mass
     )
-    
+    ### concatenate "group" data into a one column vector "base" and "new" values
     CO2_Mass_Frame <- c(baseCO2_Mass, newCO2_Mass) 
     
     ### result ----------
+    ### concatenate "group" data into a one column vector "base" and "new" values
     name_Frame <- c("Base", "New")
     
+    ### converts the column vectors of equal length into a data table
     result <- data.frame(name_Frame, Energy_Frame, CO2_Rate_Frame, CO2_Mass_Frame)
-    
+    ### denotes the column header for the "results" table
     colnames(result) <- c("Name", "Energy", "Rate", "Mass")
     result
     
   })
   
   # render -----
+  ### denote the reactive outputs used in shiny code (i.e. "output$somevariable here")
+  ### to diplay for webpage i.e. renderUI (somescript_here)
   output$dispNewEnergy <- renderUI({
+    ### get data from "result" table and prep for HTML display
     totalEnergy = result()[2,2]
     str1 <- paste("Your Annual Generation is")
     str2 <- paste(format(totalEnergy, big.mark=",", scientific = FALSE), " Mwh")
     HTML(paste(str1,str2, sep = '<br/>'))
   })
   output$dispOldEnergy <- renderUI({
+    ### get data from "result" table and prep for HTML display
     totalEnergy = result()[1,2]
     str1 <- paste("Your Annual Generation was")
     str2 <- paste(format(totalEnergy, big.mark=",", scientific = FALSE), " Mwh")
     HTML(paste(str1,str2, sep = '<br/>'))
   })
   output$dispEff <- renderUI({
+    ### get data from "result" table and prep for HTML display
     efficiency = mean(1-result()[2,3]/result()[1,3],1-result()[2,4]/result()[1,4])
     effperc = format(efficiency * 100, digits = 1)
     str3 <- paste("Your Plan Efficiency is")
@@ -159,6 +173,9 @@ shinyServer(function(input, output, session) {
     #outputOptions(output, "massPlot", suspendWhenHidden = FALSE)
   })
   
+  ### to diplay for webpage i.e. renderPlotly (somescript_here converts Plotly to r for display)
+  ### uses the "result" table created to pull data to plot figure using plotly
+  ### note variable calls
   output$ratePlotly <- renderPlotly({
     r <- plot_ly(result(),
                  type = "bar",       # all "bar" attributes: https://plot.ly/r/reference/#bar
