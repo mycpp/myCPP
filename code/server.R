@@ -150,6 +150,12 @@ shinyServer(function(input, output, session) {
     colnames(result) <- c("Name", "Energy", "Rate", "Mass")
     result
     
+    ## capacity factor (%)
+    ### denotes variable used for calculations, varies with state
+    ### and performs calculations 
+    #### unable to determine reliable capacity factor data from loaded csv files.... will load eia data file using Plant ID (AKA "ORIS code")
+    
+    
   })
   
   # render -----
