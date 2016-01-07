@@ -27,12 +27,6 @@ row.names(generationDataCleaned) = as.character(generationDataCleaned$Name)
 ### Plant Location Data
 geodata <- read.csv("data/plantgeodata.csv")
 
-# Set Default when page opens up to user----
-### needed here, called in shiny server????
-state = "Alabama"
-pctCoal = 0 
-pctNGCC = 0
-
 # Reactive ----
 shinyServer(function(input, output, session) {
   
@@ -54,7 +48,7 @@ shinyServer(function(input, output, session) {
       state = "Alabama"
       pctCoal = 0 
       pctNGCC = 0
-    }
+    } 
     ## Base Energy ----
     ### denotes variable used for calculations, varies with state
     ### and calculates data for slider bars
@@ -81,12 +75,12 @@ shinyServer(function(input, output, session) {
     ### probably not really important, http://www.r-bloggers.com/mapping-capabilities-in-r/
     ### in Maps these states were named differently, added code to handle correctly with our designations
     if (state == "Hawaii") {
-    mapStates <- map('world', region = c("USA:Hawaii"))
+      mapStates <- map('world', region = c("USA:Hawaii"))
     } else if(state == "Alaska") {
-    mapStates <- map('world', region = c("USA:Alaska"))
+      mapStates <- map('world', region = c("USA:Alaska"))
     } else                      {
-    ## 48 States and DC for a list: map('state', names = TRUE, plot = FALSE)
-    mapStates <- map('state', region = c(state))
+      ## 48 States and DC for a list: map('state', names = TRUE, plot = FALSE)
+      mapStates <- map('state', region = c(state))
     }
     stateCode <- state
     pal <- colorFactor(palette(), geodata$FuelSimplified)
