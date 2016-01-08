@@ -27,6 +27,14 @@ row.names(generationDataCleaned) = as.character(generationDataCleaned$Name)
 ### Plant Location Data
 geodata <- read.csv("data/plantgeodata.csv")
 
+
+# set the color palette which is by Fuel Type https://rstudio.github.io/leaflet/colors.html
+pal <- colorFactor(
+  palette = "Set3", 
+  domain = geodata$FuelSimplified
+  )
+
+
 # Reactive ----
 shinyServer(function(input, output, session) {
   
@@ -83,13 +91,19 @@ shinyServer(function(input, output, session) {
       mapStates <- map('state', region = c(state))
     }
     stateCode <- state
-    pal <- colorFactor(palette(), geodata$FuelSimplified)
+    
     
     your.map1 <- leaflet(data = mapStates) %>%
       addProviderTiles("Stamen.TonerLite") %>%
       addPolylines(data=mapStates, fill=FALSE, smoothFactor=FALSE, color="#000", weight = 3, opacity = 0.9) %>%
       
-      addCircleMarkers(data=geodata[((geodata$State==state)),], lng= ~Lon, lat = ~Lat, color=~pal(FuelSimplified), stroke=FALSE, popup=~popup, fillOpacity=0.8, radius=~sqrt((Generation/6000)/3.14159))
+      addCircleMarkers(data=geodata[((geodata$State==state)),], lng= ~Lon, lat = ~Lat, color=~pal(FuelSimplified), stroke=FALSE, popup=~popup, fillOpacity=0.8, radius=~sqrt((Generation/6000)/3.14159)) %>%
+      addLegend("bottomright",       # add Legend
+                pal = pal,
+                values = geodata$FuelSimplified,
+                title = "Plant Type",
+                opacity = 0.90)
+    
     
     output$Statemap <- renderLeaflet(your.map1)
     
@@ -97,7 +111,12 @@ shinyServer(function(input, output, session) {
       addProviderTiles("Stamen.TonerLite") %>%
       addPolylines(data=mapStates, fill=FALSE, smoothFactor=FALSE, color="#000", weight = 3, opacity = 0.9) %>%
       
-      addCircleMarkers(data=geodata[((geodata$State==state)),], lng= ~Lon, lat = ~Lat, color=~pal(FuelSimplified), stroke=FALSE, popup=~popup, fillOpacity=0.8, radius=~sqrt((CarbonDioxide/6000)/3.14159))
+      addCircleMarkers(data=geodata[((geodata$State==state)),], lng= ~Lon, lat = ~Lat, color=~pal(FuelSimplified), stroke=FALSE, popup=~popup, fillOpacity=0.8, radius=~sqrt((CarbonDioxide/6000)/3.14159)) %>%
+      addLegend("bottomright",             # add Legend
+                pal = pal,
+                values = geodata$FuelSimplified,
+                title = "Plant Type",
+                opacity = 0.90)
     
     output$Carbonmap <- renderLeaflet(your.map2)
     
