@@ -27,6 +27,11 @@ row.names(generationDataCleaned) = as.character(generationDataCleaned$Name)
 ### Plant Location Data
 geodata <- read.csv("data/plantgeodata.csv")
 
+# reorder FuelSimplified factor to amount of plants rather than alphabetically, this puts the best colors for the most important data.
+FuelSimplifiedtable <- table(geodata$FuelSimplified)
+FuelSimplifiedfactors <- factor(geodata$FuelSimplified,
+                                levels = names(FuelSimplifiedtable[order(FuelSimplifiedtable, decreasing = TRUE)]))
+
 # Reactive ----
 shinyServer(function(input, output, session) {
   
@@ -83,48 +88,52 @@ shinyServer(function(input, output, session) {
       mapStates <- map('state', region = c(state))
     }
     stateCode <- state
-    
-    
+
+
     # set the color palette which is by Fuel Type https://rstudio.github.io/leaflet/colors.html
     pal <- colorFactor(
-      palette = "Set3", 
-      domain = geodata$FuelSimplified
+      palette = "Paired", 
+      domain = FuelSimplifiedfactors
     )
-    
-    
+
     your.map1 <- leaflet(data = mapStates) %>%
       addProviderTiles("Stamen.TonerLite") %>%
       addPolylines(data=mapStates, fill=FALSE, smoothFactor=FALSE, color="#000", weight = 3, opacity = 0.9) %>%
       
-      addCircleMarkers(data=geodata[((geodata$State==state)),], lng= ~Lon, lat = ~Lat, color=~pal(FuelSimplified), stroke=FALSE, 
+      addCircleMarkers(data=geodata[((geodata$State==state)),], lng= ~Lon, lat = ~Lat, 
+                       color=~pal(factor(FuelSimplified,
+                                         levels = names(FuelSimplifiedtable[order(FuelSimplifiedtable, decreasing = TRUE)]))), #reordered
+                       stroke=FALSE, 
                        popup=paste(sep = "<br/>",
                                    paste0("<i>",geodata[((geodata$State==state)),]$Name,"</i>"),
                                    paste0("<b>",geodata[((geodata$State==state)),]$FuelSimplified,"</b>"),
                                    paste0("Category: ", geodata[((geodata$State==state)),]$Category)), 
-                       fillOpacity=0.8, radius=~sqrt((Generation/6000)/3.14159)) %>%
+                       fillOpacity=0.85, radius=~sqrt((Generation/6000)/3.14159)) %>%
       addLegend("bottomright",       # add Legend
                 pal = pal,
-                values = geodata$FuelSimplified,
-                title = "Plant Type",
+                values = FuelSimplifiedfactors,
+                title = "&nbsp;&nbsp;&nbsp;&nbsp;Plant Type&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;", #ghetto way to extend the width of the legend, seems to be no workaround at the moment to increasing the legend width
                 opacity = 0.90)
-    
-    
+
     output$Genmap <- renderLeaflet(your.map1)
     
     your.map2 <- leaflet(data = mapStates) %>%
       addProviderTiles("Stamen.TonerLite") %>%
       addPolylines(data=mapStates, fill=FALSE, smoothFactor=FALSE, color="#000", weight = 3, opacity = 0.9) %>%
       
-      addCircleMarkers(data=geodata[((geodata$State==state)),], lng= ~Lon, lat = ~Lat, color=~pal(FuelSimplified), stroke=FALSE, 
+      addCircleMarkers(data=geodata[((geodata$State==state)),], lng= ~Lon, lat = ~Lat, 
+                       color=~pal(factor(FuelSimplified,
+                                         levels = names(FuelSimplifiedtable[order(FuelSimplifiedtable, decreasing = TRUE)]))), #reordered
+                       stroke=FALSE, 
                        popup=paste(sep = "<br/>",
                                    paste0("<i>",geodata[((geodata$State==state)),]$Name,"</i>"),
                                    paste0("<b>",geodata[((geodata$State==state)),]$FuelSimplified,"</b>"),
                                    paste0("Category: ", geodata[((geodata$State==state)),]$Category)), 
-                       fillOpacity=0.8, radius=~sqrt((CarbonDioxide/6000)/3.14159)) %>%
-      addLegend("bottomright",             # add Legend
+                       fillOpacity=0.85, radius=~sqrt((CarbonDioxide/6000)/3.14159)) %>%
+      addLegend("bottomright",       # add Legend
                 pal = pal,
-                values = geodata$FuelSimplified,
-                title = "Plant Type",
+                values = FuelSimplifiedfactors,
+                title = "&nbsp;&nbsp;&nbsp;&nbsp;Plant Type&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;", #ghetto way to extend the width of the legend, seems to be no workaround at the moment to increasing the legend width
                 opacity = 0.90)
     
     output$Carbonmap <- renderLeaflet(your.map2)
