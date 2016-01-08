@@ -16,3 +16,4 @@ vignettes/*.pdf
 
 #api key
 code/apikey.R
+*.RData
