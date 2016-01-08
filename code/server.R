@@ -117,9 +117,9 @@ shinyServer(function(input, output, session) {
       
       addCircleMarkers(data=geodata[((geodata$State==state)),], lng= ~Lon, lat = ~Lat, color=~pal(FuelSimplified), stroke=FALSE, 
                        popup=paste(sep = "<br/>",
-                                   paste0("<i>",geodata$Name,"</i>"),
-                                   paste0("<b>",geodata$FuelSimplified,"</b>"),
-                                   paste0("Category: ", geodata$Category)),
+                                   paste0("<i>",geodata[((geodata$State==state)),]$Name,"</i>"),
+                                   paste0("<b>",geodata[((geodata$State==state)),]$FuelSimplified,"</b>"),
+                                   paste0("Category: ", geodata[((geodata$State==state)),]$Category)), 
                        fillOpacity=0.8, radius=~sqrt((CarbonDioxide/6000)/3.14159)) %>%
       addLegend("bottomright",             # add Legend
                 pal = pal,
