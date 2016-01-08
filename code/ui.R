@@ -57,7 +57,7 @@ shinyUI(fluidPage(#theme = "bootstrap.css",
            )),
     column(8,tabsetPanel(type = "tabs", 
                          id = "tabset2",
-                         tabPanel("Generation (MWh) Map", leafletOutput("Statemap")),
+                         tabPanel("Generation (MWh) Map", leafletOutput("Genmap")),
                          tabPanel("Carbon Emissions (tons of CO2) Map", leafletOutput("Carbonmap"))
     )
     ))
