@@ -1,7 +1,3 @@
-"U.S. Department of Energy, The Energy Information Administration (EIA)",,,,,,,,,,
-"EIA-923 Electric Power Plants Represented in the Generation and Fuel Data, 2012 Final_Release",,,,,,,,,,
-Sources: EIA-923 and EIA-860 Reports,,,,,,,,,,
-,,,,,,,,,,
 YEAR,EIA Plant Id,Plant Name,Plant State,Sector,Sector Name,North American Industiral Classification System (NAICS) Code,"Combined Heat And Power Status (Y = Chp, N= Non-Chp)",Reporting Frequency (Annual Or Monthly),Nameplate Capacity (MW),Annual capacity (actual/nameplate)
 2012,2,Bankhead Dam,AL,1,Electric Utility,22,N,A,45,0.40
 2012,3,Barry,AL,1,Electric Utility,22,N,M,2841.5,0.53
