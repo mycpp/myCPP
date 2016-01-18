@@ -1,4 +1,4 @@
-YEAR,EIA Plant Id,Plant Name,Plant State,Sector,Sector Name,North American Industiral Classification System (NAICS) Code,"Combined Heat And Power Status (Y = Chp, N= Non-Chp)",Reporting Frequency (Annual Or Monthly),Nameplate Capacity (MW),Annual capacity (actual/nameplate)
+YEAR,EIA Plant Id,Plant Name,Plant State,Sector,Sector Name,North American Industiral Classification System (NAICS) Code,"Combined Heat And Power Status (Y = Chp, N= Non-Chp)",Reporting Frequency (Annual Or Monthly),Nameplate Capacity (MW),Annual_capacity
 2012,2,Bankhead Dam,AL,1,Electric Utility,22,N,A,45,0.40
 2012,3,Barry,AL,1,Electric Utility,22,N,M,2841.5,0.53
 2012,4,Walter Bouldin Dam,AL,1,Electric Utility,22,N,M,225,0.19

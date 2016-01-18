@@ -27,6 +27,9 @@ row.names(generationDataCleaned) = as.character(generationDataCleaned$Name)
 ### Plant Location Data
 geodata <- read.csv("data/plantgeodata.csv")
 
+### Plant capacity factor data
+plantcap_facCSV = read.csv("data/EIA923_pg6_2012.csv", header = TRUE)
+
 # Reactive ----
 shinyServer(function(input, output, session) {
   
