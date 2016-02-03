@@ -1,0 +1,8 @@
+name: tool
+account: bccpp
+server: shinyapps.io
+bundleId: 346086
+url: https://bccpp.shinyapps.io/tool/
+when: 1452282501.27618
+asMultiple: FALSE
+asStatic: FALSE

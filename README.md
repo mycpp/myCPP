@@ -1,6 +1,6 @@
-# Welcome to Project Falcon - the Bredesen Center's Clean Power Plan Tool
+# Welcome to the myCPP Tool
 
-This is a running repository of active code development for the Clean Power Plan tool aided at helping to understand the implications for states towards the EPA's Clean Power Plan.
+This is a running repository of active code development for the my Clean Power Plan tool aided at helping to understand the implications for states towards the EPA's Clean Power Plan.
 
 ## About
 The University of Tennessee Bredesen Center and the University of Tennessee Nuclear Engineering department have undergone a multi-year collaborative effort in evaluating the Environmental Protection Agency’s (EPA) Clean Power Plan (CPP) for its accuracy and fair treatment of all energy sources. The Bredesen Center has used this research to develop a publication summarizing many inconsistencies found within the CPP. The final submission of the CPP draft by the EPA addressed the vast majority of this publication’s outlined concerns.
@@ -10,6 +10,10 @@ To address this interest, the Bredesen Center is leading the collaborative effor
 
 ## Feature Plan
 
-- leaflet integration
+[ ] leaflet integration
+[ ] lat/lon of plants
+[ ] color code of plants by CO2 output and power Output
+   [ ] Legend of Plant Type, ColorBrewer for consistent colors
+   
 - multiple tabs
 - additional plotly layouts

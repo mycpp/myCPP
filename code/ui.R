@@ -1,3 +1,9 @@
+<<<<<<< HEAD
+=======
+# Emilio
+#Jessica
+# Justin
+>>>>>>> master
 # This is the user-interface definition of a Shiny web application.
 # You can find out more about building applications with Shiny here:
 #
@@ -14,6 +20,7 @@ shinyUI(fluidPage(theme = "bootstrap.css",
   # Google Analytics
   tags$head(includeScript("www/google-analytics.js")),
   # Application title
+<<<<<<< HEAD
   HTML('<img src="logo.svg" style = "max-height:130px" width = "100%"/>'),
   fluidRow(column(12, align ="center",
                   h3("A Clean Power Plan Evaluation Tool")
@@ -21,6 +28,31 @@ shinyUI(fluidPage(theme = "bootstrap.css",
 
   # Sidebar with a slider input for number of bins
 
+=======
+  titlePanel("Clean Power Plan Evaluation Tool"),
+  
+  # Sidebar with a slider input for number of bins
+  fluidRow(
+    column(4,
+           sliderInput("Coal",
+                       "Coal Generation",
+                       min = -20,
+                       max = 20,
+                       value = 0),
+           sliderInput("NGCC",
+                       "NGCC Generation",
+                       min = -20,
+                       max = 20,
+                       value = 0),
+           selectizeInput("stateInput", #inputID
+                          label = "State", #label
+                          choices = NULL,
+                          selected = "Alabama",
+                          multiple = FALSE,
+                          options = list(placeholder = 'select a state name') #maxOptions = 5, 
+           )
+    ),
+>>>>>>> master
     ###
   fluidRow(
   selectizeInput("stateInput", #inputID
@@ -42,6 +74,7 @@ shinyUI(fluidPage(theme = "bootstrap.css",
            h3(htmlOutput("dispDemandMet"))
     )
   ),
+<<<<<<< HEAD
   fluidRow(column(1),
     # Show a plot of the generated distribution
     column(7,
@@ -196,3 +229,23 @@ shinyUI(fluidPage(theme = "bootstrap.css",
   HTML('<p align="center"><a href="mailto:bccppt@gmail.com" onclick="ga(\'send\', \'event\', \'click\', \'Send an Email\', \'Email\', 1)">Have feedback that you would like to give us? Drop us a line here!</a></p>')
 )
 )
+=======
+  fluidRow(
+    # Show a plot of the generated distribution
+    column(4,
+           tabsetPanel(type = "tabs", 
+                       id = "tabset1",
+                       tabPanel("Rate", value = "Rate", plotlyOutput("ratePlotly")),
+                       tabPanel("Mass", value = "Mass", plotlyOutput("massPlotly"))
+           )),
+    column(8,tabsetPanel(type = "tabs", 
+                         id = "tabset2",
+                         tabPanel("Generation (MWh) Map", leafletOutput("Genmap")),
+                         tabPanel("Carbon Emissions (tons of CO2) Map", leafletOutput("Carbonmap"))
+    )
+    ))
+)
+)
+
+
+>>>>>>> master
