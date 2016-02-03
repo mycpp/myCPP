@@ -20,7 +20,6 @@ generationDataCleaned = generationData[!(is.null(generationData$Name) | generati
 stateNameCSV = read.csv("data/StateNames.csv",
                         header = TRUE)
 
-<<<<<<< HEAD
 ### convert generation data to vectors with charcters for manipulation
 statenames = as.character(stateNameCSV$State) 
 row.names(generationDataCleaned) = as.character(generationDataCleaned$Name)
@@ -32,13 +31,6 @@ geodata <- read.csv("data/plantgeodata.csv")
 
 
 # Reactive ----
-=======
-#set default
-state = "Alabama"
-pctCoal = 0 
-pctNGCC = 0
-
->>>>>>> origin/dev
 shinyServer(function(input, output, session) {
   
   updateSelectizeInput(session,
@@ -47,7 +39,6 @@ shinyServer(function(input, output, session) {
                        selected = "Alabama",
                        server = TRUE)
   
-<<<<<<< HEAD
   output$NGCCSlider <- renderUI({
     sliderInput("NGCCCap",
                 "NGCC Average Capacity Factor (%)",
@@ -63,9 +54,6 @@ shinyServer(function(input, output, session) {
 
   # reactive expression -------------  
   ### denote the reactive inputs used in code (i.e. "input$somevariable here") 
-=======
-  # reactive expression -------------  
->>>>>>> origin/dev
   result <- reactive({
     state = input$stateInput
     pctCoal = input$CoalHeatRateImp / 100
@@ -91,7 +79,6 @@ shinyServer(function(input, output, session) {
     ## Handle Onload ----
     ### default display when nothing selected
     if(state == "") {
-<<<<<<< HEAD
       state = "Alabama"
       pctCoal = 0 
       pctNGCC = 0
@@ -118,23 +105,6 @@ shinyServer(function(input, output, session) {
     newWind_Energy = baseWind_Energy+(windAdditions*0.274*365.25*24)
     newSolar_Energy = baseSolar_Energy+(solarAdditions*0.163*365.25*24)
     newGeothermal_Energy = baseGeothermal_Energy+(geothermalAdditions*0.472*365.25*24)
-=======
-      #handle onload
-      state = "Alabama"
-      pctCoal = 0 
-      pctNGCC = 0
-    }
-    baseCoal_Energy = generationDataCleaned[state, "Coal.Steam.Electric.Generation..MWh."]
-    baseNGCC_Energy = generationDataCleaned[state, "NGCC.Electric.Generation..MWh."]
-    
-    baseEnergy = sum(baseCoal_Energy,
-                     baseNGCC_Energy
-    )
-    
-    newEnergy = sum((1 + pctCoal) * baseCoal_Energy,
-                    (1 + pctNGCC) * baseNGCC_Energy
-    )
->>>>>>> origin/dev
     
     newEnergy = sum(newCoal_Energy,newNGCC_Energy,newNuclear_Energy,newHydro_Energy,newBiomass_Energy,newWind_Energy,newSolar_Energy,newGeothermal_Energy,nuclearSubtractions*0.850*365.25*24,hydroSubtractions*0.369*365.25*24,biomassSubtractions*0.514*365.25*24,windSubtractions*0.274*365.25*24,solarSubtractions*0.163*365.25*24,geothermalSubtractions*0.472*365.25*24)
     ## Energy Frame ----
@@ -142,18 +112,8 @@ shinyServer(function(input, output, session) {
     Energy_Frame <- c(baseEnergy, newEnergy)
     print(Energy_Frame)
     
-<<<<<<< HEAD
     ## Leaflet Maps --------- 
     ### read https://rstudio.github.io/leaflet/ for syntax details
-=======
-    mapStates <- map('state', region = c(state))
-    your.map <- leaflet(data = mapStates) %>%
-      addPolylines(data=mapStates, fill=FALSE, smoothFactor=FALSE, color="#000", weight = 3, opacity = 0.9) %>%
-      addMarkers(lat=35.9728, lng=-83.9422) #Knoxville, TN
-    output$Statemap <- renderLeaflet(your.map)
-    
-    ## Emissions (mass) calculated by Rate -----------
->>>>>>> origin/dev
     
     ## Handle Hawaii and Alaska abstraction ----
     ### probably not really important, http://www.r-bloggers.com/mapping-capabilities-in-r/
@@ -168,12 +128,6 @@ shinyServer(function(input, output, session) {
     }
     stateCode <- state
     
-<<<<<<< HEAD
-=======
-    baseCO2_Rate = sum((baseCoal_CO2_Rate / 2000 * baseCoal_Energy) , #convert lbs to tons
-                       (baseNGCC_CO2_Rate / 2000 * baseNGCC_Energy)   #convert lbs to tons
-    )
->>>>>>> origin/dev
     
     # set the color palette which is by Fuel Type https://rstudio.github.io/leaflet/colors.html
     pal <- colorFactor(
@@ -182,7 +136,6 @@ shinyServer(function(input, output, session) {
     )
     
     
-<<<<<<< HEAD
     your.map1 <- leaflet(data = mapStates) %>%
       addProviderTiles("Stamen.TonerLite") %>%
       addPolylines(data=mapStates, fill=FALSE, smoothFactor=FALSE, color="#000", weight = 3, opacity = 0.9) %>%
@@ -199,9 +152,6 @@ shinyServer(function(input, output, session) {
                 title = "Plant Type",
                 opacity = 0.90)
     
-=======
-    ## Emissions (mass) calculated by Mass -----------
->>>>>>> origin/dev
     
     output$Genmap <- renderLeaflet(your.map1)
     
@@ -243,23 +193,12 @@ shinyServer(function(input, output, session) {
     
     baseCO2_Mass = sum(baseCoal_CO2_Mass,
                        baseNGCC_CO2_Mass
-<<<<<<< HEAD
     )
     newCO2_Mass = (newCoal_Energy-(pctCoal)*baseCoal_Energy-baseCoal_Energy)*baseCoal_CO2_Rate+(newNGCC_Energy-baseNGCC_Energy)*baseNGCC_CO2_Rate+baseCoal_CO2_Mass+baseNGCC_CO2_Mass
     
     massGoal = generationDataCleaned[state, "MassGoals"]
     ### concatenate "group" data into a one column vector "base" and "new" values
     CO2_Mass_Frame <- c(baseCO2_Mass/2000, newCO2_Mass/2000) 
-=======
-    )
-    newCO2_Mass = sum((1 + pctCoal) * baseCoal_CO2_Mass,
-                      (1 + pctNGCC) * baseNGCC_CO2_Mass
-    )
-    
-    CO2_Mass_Frame <- c(baseCO2_Mass, newCO2_Mass) 
-    
-    ### result ----------    
->>>>>>> origin/dev
     
     ### result ----------
     goals_Frame <- c(rateGoal, massGoal)
@@ -271,7 +210,6 @@ shinyServer(function(input, output, session) {
     colnames(result) <- c("Name", "Energy", "Rate", "Mass", "Goals")
     
     result
-<<<<<<< HEAD
     print(result)
 
     
@@ -291,17 +229,6 @@ shinyServer(function(input, output, session) {
     demandMet = format(demandMet*100,digits=3)
     str1 <- paste("2030 Consumer Demand Met")
     str2 <- paste(format(demandMet, big.mark=",", scientific = FALSE), "%")
-=======
-    
-  })
-  
-  # render -----  
-  
-  output$dispNewEnergy <- renderUI({
-    totalEnergy = result()[2,2]
-    str1 <- paste("Your Annual Generation is")
-    str2 <- paste(format(totalEnergy, big.mark=",", scientific = FALSE), " Mwh")
->>>>>>> origin/dev
     HTML(paste(str1,str2, sep = '<br/>'))
   })
   output$dispRate <- renderUI({
@@ -401,29 +328,4 @@ shinyServer(function(input, output, session) {
     
   })
   
-<<<<<<< HEAD
 })
-=======
-  output$massPlotly <- renderPlotly({
-    p <- plot_ly(result(),
-                 type = "bar",       # all "bar" attributes: https://plot.ly/r/reference/#bar
-                 x = Name,               # more about bar's "x": /r/reference/#bar-x
-                 y = Mass,            # more about bar's "y": /r/reference/#bar-y
-                 name = "CO2 Emissions (tons)",  # more about bar's "name": /r/reference/#bar-name
-                 marker = list(          # marker is a named list, valid keys: /r/reference/#bar-marker
-                   color=c("#1b9e77","#d95f02")     # more about marker's "color" attribute: /r/reference/#bar-marker-color
-                 ))
-    p <- layout(p,              # all of layout's properties: /r/reference/#layout
-                xaxis = list(           # layout's xaxis is a named list. List of valid keys: /r/reference/#layout-xaxis
-                  title = ""     # xaxis's title: /r/reference/#layout-xaxis-title
-                ),
-                yaxis = list(           # layout's yaxis is a named list. List of valid keys: /r/reference/#layout-yaxis
-                  title = "CO2 Emissions (tons)"      # yaxis's title: /r/reference/#layout-yaxis-title
-                )
-                
-    )
-    
-  })
-  
-})
->>>>>>> origin/dev
