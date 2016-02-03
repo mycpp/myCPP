@@ -1,8 +1,8 @@
 name: mycpp
 account: bccpp
 server: shinyapps.io
-bundleId: 365370
+bundleId: 365564
 url: https://bccpp.shinyapps.io/mycpp/
-when: 1454519162.15535
+when: 1454532938.67899
 asMultiple: FALSE
 asStatic: FALSE
