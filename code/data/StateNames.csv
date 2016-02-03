@@ -1,12 +1,44 @@
 State
 Alabama
+<<<<<<< HEAD
+Arkansas
+Arizona
+=======
 Alaska
 Arizona
 Arkansas
+>>>>>>> master
 California
 Colorado
 Connecticut
 Delaware
+<<<<<<< HEAD
+Florida
+Georgia
+Iowa
+Idaho
+Illinois
+Indiana
+Kansas
+Kentucky
+Louisiana
+Massachusetts
+Maryland
+Maine
+Michigan
+Minnesota
+Missouri
+Mississippi
+Montana
+North Carolina
+North Dakota
+Nebraska
+New Hampshire
+New Jersey
+New Mexico
+Nevada
+New York
+=======
 District of Columbia
 Florida
 Georgia
@@ -34,6 +66,7 @@ New Mexico
 New York
 North Carolina
 North Dakota
+>>>>>>> master
 Ohio
 Oklahoma
 Oregon
@@ -44,9 +77,17 @@ South Dakota
 Tennessee
 Texas
 Utah
+<<<<<<< HEAD
+Virginia
+Washington
+Wisconsin
+West Virginia
+Wyoming
+=======
 Vermont
 Virginia
 Washington
 West Virginia
 Wisconsin
+>>>>>>> master
 Wyoming
