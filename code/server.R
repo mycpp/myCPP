@@ -27,10 +27,15 @@ row.names(generationDataCleaned) = as.character(generationDataCleaned$Name)
 ### Plant Location Data
 geodata <- read.csv("data/plantgeodata.csv")
 
+<<<<<<< HEAD
 # reorder FuelSimplified factor to amount of plants rather than alphabetically, this puts the best colors for the most important data.
 FuelSimplifiedtable <- table(geodata$FuelSimplified)
 FuelSimplifiedfactors <- factor(geodata$FuelSimplified,
                                 levels = names(FuelSimplifiedtable[order(FuelSimplifiedtable, decreasing = TRUE)]))
+=======
+### Plant capacity factor data
+plantcap_facCSV = read.csv("data/EIA923_pg6_2012.csv", header = TRUE)
+>>>>>>> origin/master
 
 # Reactive ----
 shinyServer(function(input, output, session) {
