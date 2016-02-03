@@ -11,7 +11,8 @@ library(maps)
 
 
 shinyUI(fluidPage(theme = "bootstrap.css",
-
+  # Google Analytics
+  tags$head(includeScript("www/google-analytics.js")),
   # Application title
   HTML('<img src="logo.svg" style = "max-height:130px" width = "100%"/>'),
   fluidRow(column(12, align ="center",
@@ -192,6 +193,6 @@ shinyUI(fluidPage(theme = "bootstrap.css",
     )
   ),
   HTML('<img src="bc-banner-bottom.svg", style = "max-height:100px" width = "100%"/>'),
-  HTML('<p align="center"><a href="mailto:bccppt@gmail.com">Have feedback that you would like to give us? Drop us a line here!</a></p>')
+  HTML('<p align="center"><a href="mailto:bccppt@gmail.com" onclick="ga('send', 'event', 'click', 'link', 'Email', 1)">Have feedback that you would like to give us? Drop us a line here!</a></p>')
 )
 )
