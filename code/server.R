@@ -135,7 +135,7 @@ shinyServer(function(input, output, session) {
       domain = geodata$FuelSimplified
     )
     
-    
+    print(mapStates)
     your.map1 <- leaflet(data = mapStates) %>%
       addProviderTiles("Stamen.TonerLite") %>%
       addPolylines(data=mapStates, fill=FALSE, smoothFactor=FALSE, color="#000", weight = 3, opacity = 0.9) %>%
@@ -150,8 +150,9 @@ shinyServer(function(input, output, session) {
                 pal = pal,
                 values = geodata$FuelSimplified,
                 title = "Plant Type",
-                opacity = 0.90)
-    
+                opacity = 0.90) #%>%
+      #clearBounds()
+      #setView(mean(mapStates$range[1:2]), mean(mapStates$range[3:4]), zoom = 6)
     
     output$Genmap <- renderLeaflet(your.map1)
     

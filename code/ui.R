@@ -193,6 +193,6 @@ shinyUI(fluidPage(theme = "bootstrap.css",
     )
   ),
   HTML('<img src="bc-banner-bottom.svg", style = "max-height:100px" width = "100%"/>'),
-  HTML('<p align="center"><a href="mailto:bccppt@gmail.com" onclick="ga('send', 'event', 'click', 'link', 'Email', 1)">Have feedback that you would like to give us? Drop us a line here!</a></p>')
+  HTML('<p align="center"><a href="mailto:bccppt@gmail.com" onclick="ga(\'send\', \'event\', \'click\', \'Send an Email\', \'Email\', 1)">Have feedback that you would like to give us? Drop us a line here!</a></p>')
 )
 )
