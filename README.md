@@ -10,10 +10,10 @@ To address this interest, the Bredesen Center is leading the collaborative effor
 
 ## Feature Plan
 
-[x] leaflet integration
-[x] lat/lon of plants
-[x] color code of plants by CO2 output and power Output
-   [x] Legend of Plant Type, ColorBrewer for consistent colors
+[ ] leaflet integration
+[ ] lat/lon of plants
+[ ] color code of plants by CO2 output and power Output
+   [ ] Legend of Plant Type, ColorBrewer for consistent colors
    
 - multiple tabs
 - additional plotly layouts
