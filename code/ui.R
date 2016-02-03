@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-# alex
-=======
->>>>>>> origin/dev
 # This is the user-interface definition of a Shiny web application.
 # You can find out more about building applications with Shiny here:
 #
@@ -15,15 +11,15 @@ library(maps)
 
 
 shinyUI(fluidPage(theme = "bootstrap.css",
-  
+
   # Application title
   HTML('<img src="logo.svg" style = "max-height:130px" width = "100%"/>'),
   fluidRow(column(12, align ="center",
                   h3("A Clean Power Plan Evaluation Tool")
   )),
-  
+
   # Sidebar with a slider input for number of bins
-  
+
     ###
   fluidRow(
   selectizeInput("stateInput", #inputID
@@ -34,7 +30,7 @@ shinyUI(fluidPage(theme = "bootstrap.css",
                  options = list(placeholder = 'select a state name'))
   ),
   fluidRow(column(1),
-    column(7,tabsetPanel(type = "tabs", 
+    column(7,tabsetPanel(type = "tabs",
                          id = "tabset2",
                          tabPanel("Generation (MWh) Map", leafletOutput("Genmap")),
                          tabPanel("Carbon Emissions (tons of CO2) Map", leafletOutput("Carbonmap"))
@@ -45,10 +41,10 @@ shinyUI(fluidPage(theme = "bootstrap.css",
            h3(htmlOutput("dispDemandMet"))
     )
   ),
-  fluidRow(column(1),  
+  fluidRow(column(1),
     # Show a plot of the generated distribution
     column(7,
-           tabsetPanel(type = "tabs", 
+           tabsetPanel(type = "tabs",
                        id = "tabset1",
                        tabPanel("Rate", value = "Rate", h3(htmlOutput("dispRate"),plotlyOutput("ratePlotly",height="150px"))),
                        tabPanel("Mass", value = "Mass", h3(htmlOutput("dispMass"),plotlyOutput("massPlotly",height="150px")))
@@ -56,9 +52,9 @@ shinyUI(fluidPage(theme = "bootstrap.css",
   ),
   fluidRow(column(1),
     column(8,
-           tabsetPanel(type = "tabs", 
+           tabsetPanel(type = "tabs",
                        id = "tabset0",
-                       tabPanel("Plant Modifications", value = "Plant Modifications", 
+                       tabPanel("Plant Modifications", value = "Plant Modifications",
                                 sliderInput("CoalHeatRateImp",
                                             "Coal Heat Rate Improvement (%)",
                                             min = 0,
@@ -75,7 +71,7 @@ shinyUI(fluidPage(theme = "bootstrap.css",
                                             step = 1,
                                             width = '1000px')
                        ),
-                       tabPanel("Capacity Additions", value = "Capacity Additions", 
+                       tabPanel("Capacity Additions", value = "Capacity Additions",
                                 sliderInput("CoalCapacity",
                                             "Increase Coal Capacity (MW)",
                                             min = 0,
@@ -133,7 +129,7 @@ shinyUI(fluidPage(theme = "bootstrap.css",
                                             step = 10,
                                             width = '1000px')
                        ),
-                       tabPanel("Capacity Reductions", value = "Capacity Additions", 
+                       tabPanel("Capacity Reductions", value = "Capacity Additions",
                                 sliderInput("CoalReduction",
                                             "Decrease Coal Capacity (MW)",
                                             min = -10000,
@@ -191,7 +187,7 @@ shinyUI(fluidPage(theme = "bootstrap.css",
                                             step = 10,
                                             width = '1000px')
                        )
-                    
+
            )
     )
   ),
