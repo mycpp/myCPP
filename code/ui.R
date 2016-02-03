@@ -1,6 +1,3 @@
-# Emilio
-#Jessica
-# Justin
 # This is the user-interface definition of a Shiny web application.
 # You can find out more about building applications with Shiny here:
 #
@@ -12,7 +9,6 @@ library(plotly)
 library(leaflet)
 library(maps)
 
-<<<<<<< HEAD
 
 shinyUI(fluidPage(theme = "bootstrap.css",
   
@@ -24,34 +20,6 @@ shinyUI(fluidPage(theme = "bootstrap.css",
   
   # Sidebar with a slider input for number of bins
   
-=======
-shinyUI(fluidPage(#theme = "bootstrap.css",
-  
-  # Application title
-  titlePanel("CPP Test Tool"),
-  
-  # Sidebar with a slider input for number of bins
-  fluidRow(
-    column(4,
-           sliderInput("Coal",
-                       "Coal Usage",
-                       min = -20,
-                       max = 20,
-                       value = 0),
-           sliderInput("NGCC",
-                       "NGCC Usage",
-                       min = -20,
-                       max = 20,
-                       value = 0),
-           selectizeInput("stateInput", #inputID
-                          label = "State", #label
-                          choices = NULL,
-                          selected = "Alabama",
-                          multiple = FALSE,
-                          options = list(placeholder = 'select a state name') #maxOptions = 5, 
-           )
-    ),
->>>>>>> origin/dev
     ###
   fluidRow(
   selectizeInput("stateInput", #inputID
@@ -70,20 +38,11 @@ shinyUI(fluidPage(#theme = "bootstrap.css",
     )),
   fluidRow(column(2),
     column(4, align ="center",
-<<<<<<< HEAD
            h3(htmlOutput("dispDemandMet"))
-=======
-           h3(htmlOutput("dispOldEnergy")),
-           h3(htmlOutput("dispNewEnergy"))
-    ),
-    column(4, align = "center",
-           h3(htmlOutput("dispEff"))
->>>>>>> origin/dev
     )
   ),
   fluidRow(column(1),  
     # Show a plot of the generated distribution
-<<<<<<< HEAD
     column(7,
            tabsetPanel(type = "tabs", 
                        id = "tabset1",
@@ -236,27 +195,3 @@ shinyUI(fluidPage(#theme = "bootstrap.css",
   HTML('<p align="center"><a href="mailto:bccppt@gmail.com">Have feedback that you would like to give us? Drop us a line here!</a></p>')
 )
 )
-=======
-    column(4,
-           ""# actionButton("go", "Plot")
-    ),
-
-    column(8,
-           tabsetPanel(type = "tabs", 
-                       id = "tabset1",
-                       tabPanel("Rate", value = "Rate", plotlyOutput("ratePlotly")),
-                       tabPanel("Mass", value = "Mass", plotlyOutput("massPlotly")),#, plotlyOutput("massPlot"))
-                       tabPanel("State Energy Map", value = "State Energy Map", leafletOutput("Statemap"))
-           )
-           #             h1(radioButtons("radio", 
-           #                             label = "Emissions",
-           #                             choices = list (
-           #                               "Rate" = 1,
-           #                               "Mass" = 2
-           #                             ),
-           #                             selected = 1)),
-    )
-  )#,
-
-))
->>>>>>> origin/dev
