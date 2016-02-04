@@ -12,5 +12,5 @@
     ga('send', 'event', 'Choose State', $(e.currentTarget).val(), $(e.currentTarget).val());
   });
     $(document).on('change', 'input', function(e) {
-    ga('send', 'event', 'Choose Value', $(e.currentTarget).attr('id'), $(e.currentTarget).val());
+    ga('send', 'event', 'Change Slider', $(e.currentTarget).attr('id'), $(e.currentTarget).val());
   });
