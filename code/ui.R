@@ -18,6 +18,9 @@ shinyUI(fluidPage(theme = "bootstrap.css",
                   fluidRow(column(12, align ="center",
                                   h3("A Clean Power Plan Evaluation Tool")
                   )),
+                  fluidRow(column(12, align ="center",
+                                  h4("Click", HTML('<a href="https://github.com/mycpp/myCPP/wiki/User-Guide-for-myCPP" onclick="ga(\'send\', \'event\', \'click\', \'View the Wiki\', \'Wiki\', 1)">here</a>'), "for a guide of how to use this tool")
+                  )),
                   
                   # Sidebar with a slider input for number of bins
                   
