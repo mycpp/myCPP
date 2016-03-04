@@ -49,8 +49,6 @@ shinyServer(function(input, output, session) {
                 width = '1000px')
     
   })
-  output$BCLogo <- renderImage({outfile <- tempfile(fileext='BCLogo.png')})
-  
   
   # reactive expression -------------  
   ### denote the reactive inputs used in code (i.e. "input$somevariable here") 
