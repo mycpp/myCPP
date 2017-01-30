@@ -10,7 +10,7 @@ The repository for the "My Clean Power Plan" tool will remain as is, while updat
 The University of Tennessee Bredesen Center and the University of Tennessee Nuclear Engineering department have undergone a collaborative effort in evaluating the Environmental Protection Agency’s (EPA) Clean Power Plan (CPP) for its accuracy and fair treatment of all energy sources. 
 
 ## Original Scope of the Tool 
-The original intention of the Bredesen Center was to aide policymakers (and members of the interested public) in understanding the state compliance pathways of the EPA's Clean Power Plan. This would be done in the form of visual aides i.e. state maps and toggle bars.  
+The original intention of the tool was to aide policymakers (and members of the interested public) in understanding the state compliance pathways of the EPA's Clean Power Plan. This would be done in the form of visual aides i.e. state maps and toggle bars created by Bredesen Center students.  
 
 ## Feature Plan
 
