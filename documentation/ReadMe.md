@@ -1,5 +1,5 @@
 ## About
-The Bredesen Center (http://bredesencenter.utk.edu/) is a joint institution with the University of Tennessee and Oak Ridge National Lab, and offers an interdiscplinary doctorate degrees. This tool was developed by Bredesen Center students, within the Energy Science and Engineering program, as part of outreach to the general public.
+The Bredesen Center for Interdiscplinary Research and Graduate Education (http://bredesencenter.utk.edu/) is a joint institution with the University of Tennessee and Oak Ridge National Lab. This tool was developed by Bredesen Center PhD students, within the Energy Science and Engineering program, as part of outreach to the general public.
 
 ## Scope
 This widely accessible, user-friendly, and accurate tool enables users to visualize electrical energy generation of various fuel sources within the United States. Much like the "U.S. Energy Mapping System" (http://www.eia.gov/state/maps.cfm?src=home-f3), created by the U.S. Energy Information Administration (EIA), this tool plots power point locations on a map of the United States. To aide visulization, the "My Clean Power" tool scales the power plant location (cicles) with respect to generation, i.e. the more generation, the bigger the circle. 
