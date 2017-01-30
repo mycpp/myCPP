@@ -8,7 +8,7 @@ All data was obtained from http://www.eia.gov/.
 ## About
 The Bredesen Center for Interdisciplinary Research and Graduate Education (http://bredesencenter.utk.edu/) is a joint institution with the University of Tennessee and Oak Ridge National Lab. This tool was developed by Bredesen Center PhD students, within the Energy Science and Engineering program, as part of outreach to the general public.
 
-## Tool Feature
+## Tool Features
 
 [ ] leaflet integration
 
