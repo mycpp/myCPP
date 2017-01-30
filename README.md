@@ -2,7 +2,7 @@
 
 This is a repository for the "my Clean Power Plan", or "myCPP", tool. The scope of the tool is to facilitate comprehension of state implications with respect to the EPA's Clean Power Plan.
 
-In light of recent legal proceedings, the scope of the tool has been repurposed from that of targeting state legislators, to educationing the general public on sources of electrical power and corresponding carbon emissions. This new "my Clean Power" (myCP) tool is located at http://github.com/mycpp/my-clean-power. 
+In light of recent legal proceedings (2016), the scope of the tool has been repurposed from that of targeting state legislators, to educationing the general public on sources of electrical power and corresponding carbon emissions. This new "my Clean Power" (myCP) tool is located at http://github.com/mycpp/my-clean-power. 
 
 The repository for the "My Clean Power Plan" tool will remain as is, while updates to the tools will be dedicated to the (new) "My Clean Power" tool, and its living repository. More information on the scope and motivation for the original myCPP tool can be found below. 
 
