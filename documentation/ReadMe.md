@@ -11,6 +11,9 @@ All data was obtained from http://www.eia.gov/.
 ## Feature Plan
 
 [ ] leaflet integration
+
 [ ] lat/lon of plants
+
 [ ] color code of plants by CO2 output and power Output
+
 [ ] Legend of Plant Type, ColorBrewer for consistent colors
