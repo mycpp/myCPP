@@ -1,11 +1,14 @@
-## Scope of the Clean Power Tool 
+## The Scope of the Clean Power Tool 
 This widely accessible, user-friendly, and accurate tool enables users to visualize electrical energy generation of various fuel sources within the United States. Much like the "U.S. Energy Mapping System" (http://www.eia.gov/state/maps.cfm?src=home-f3), created by the U.S. Energy Information Administration (EIA), this tool plots power plant locations on a map of the United States. To aide visualization, the "My Clean Power" tool scales the power plant (circle) with respect to generation, i.e. the more generation, the bigger the circle. 
 
-The tool can be filtered by energy source (e.g. coal, natural gas, wind, etc.), with a different color associated to each energy source. The second tab of the tool will illustrate carbon dioxide emissions for each corresponding energy source (in progress, Jan. 2017). 
+The tool can be filtered by energy source (e.g. coal, natural gas, wind, etc.), with a different color associated to each, so that multiple sources can be viewed simultaneously. The second tab of the tool will illustrate carbon dioxide emissions for each corresponding energy source (In progress, Jan. 2017). 
 
 All data was obtained from http://www.eia.gov/. 
 
-## Feature Plan
+## About
+The Bredesen Center for Interdisciplinary Research and Graduate Education (http://bredesencenter.utk.edu/) is a joint institution with the University of Tennessee and Oak Ridge National Lab. This tool was developed by Bredesen Center PhD students, within the Energy Science and Engineering program, as part of outreach to the general public.
+
+## Tool Feature
 
 [ ] leaflet integration
 
